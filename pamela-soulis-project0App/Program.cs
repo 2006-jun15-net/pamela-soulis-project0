@@ -105,9 +105,12 @@ namespace pamela_soulis_project0App
                     Console.WriteLine("Enter your id number: ");
                     int id = int.Parse(Console.ReadLine());
                     //var newcustomer = new pamela_soulis_project0DataAccess.Model.Customer { CustomerId = id };
-                    var newcustomer = crepo.GetById(id).ToList();
-                    foreach (var person in newcustomer)
-                    {
+                    //var ReturningCustomerId = crepo.GetById(id);
+                    var TheCustomer = crepo.GetAll()
+                        .Where(c => c.CustomerId == id)
+                        .ToList();
+                    foreach (var person in TheCustomer)
+                    { 
                         Console.WriteLine($"Your name is {person.FirstName} {person.LastName}.");
 
                     }
@@ -149,7 +152,7 @@ namespace pamela_soulis_project0App
 
 
 
-
+        
         }
               
        
