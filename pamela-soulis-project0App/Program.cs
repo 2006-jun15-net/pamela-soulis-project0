@@ -37,12 +37,12 @@ namespace pamela_soulis_project0App
         public static int NewOrder()
         {
             using var context = new pamelasoulisproject0Context(Options);
-            int thisOrderId = context.Orders.Count() + 1;
+            int thisOrderId = context.Orders.Count() + 2;
             return thisOrderId;
 
         }
 
-
+        
 
 
         static void Main(string[] args)
@@ -50,6 +50,9 @@ namespace pamela_soulis_project0App
             GenericRepository<pamela_soulis_project0DataAccess.Model.Customer, pamelasoulisproject0Library.Customer > crepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Customer, pamelasoulisproject0Library.Customer>(context);
             GenericRepository<pamela_soulis_project0DataAccess.Model.Location, pamelasoulisproject0Library.Location> lrepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Location, pamelasoulisproject0Library.Location>(context);
             GenericRepository<pamela_soulis_project0DataAccess.Model.Product, pamelasoulisproject0Library.Product> prepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Product, pamelasoulisproject0Library.Product>(context);
+            GenericRepository<pamela_soulis_project0DataAccess.Model.Inventory, pamelasoulisproject0Library.Inventory> irepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Inventory, pamelasoulisproject0Library.Inventory>(context);
+            GenericRepository<pamela_soulis_project0DataAccess.Model.OrderLine, pamelasoulisproject0Library.OrderLine> olrepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.OrderLine, pamelasoulisproject0Library.OrderLine>(context);
+
 
 
             Console.WriteLine("Hello! Welcome to the store!");
@@ -59,6 +62,7 @@ namespace pamela_soulis_project0App
                 Console.WriteLine("b:\tYou are a new customer.");
                 Console.WriteLine("c:\tYou are a returning customer.");
                 Console.WriteLine("d:\tYou want to place an order.");
+               
                 Console.WriteLine("q:\tExit.");
                 var input = Console.ReadLine();
 
@@ -116,25 +120,41 @@ namespace pamela_soulis_project0App
                     }
                 }
 
-
+                //this workd
+                //Display products, display inventory, add to OrderLine
                 else if (input == "d")
                 {
                     var TheProductsAvailable = prepo.GetAll().ToList();
                     foreach (var item in TheProductsAvailable)
                     {
-                        Console.WriteLine($"Product: {item.Name} with Id {item.ProductId}");
+
+                        Console.WriteLine($"Product: {item.Name} with Id {item.ProductId}. We are selling this item for ${item.Price}");
+                    
                     }
+
+                    Console.WriteLine("Enter a location ID to place an order at this store.");
+                    int location1 = int.Parse(Console.ReadLine());
+
                     Console.WriteLine("Enter a product ID to add it to your cart.");
                     int product1 = int.Parse(Console.ReadLine());
+
+                    var TheAmountAvailable = irepo.GetAll()
+                            .Where(i => (i.ProductId == product1 && i.LocationId == location1))
+                            .ToList();
+                    foreach (var amount in TheAmountAvailable)
+                    {
+                        Console.WriteLine($"We have {amount.Quantity} left");
+                    }
+
                     Console.WriteLine("How many would you like?");
                     int amount1 = int.Parse(Console.ReadLine());
                     int thisNewOrderId = NewOrder();
-                    //Console.WriteLine("This is your order ID: {thisNewOrder}");
-                    AddAnOrder(thisNewOrderId, product1, amount1);
-                    
-
+                    var neworder = new pamelasoulisproject0Library.OrderLine { OrderId = thisNewOrderId, ProductId = product1, Quantity = amount1 };
+                    olrepo.Insert(neworder);
+                    olrepo.SaveToDB();
 
                 }
+                
 
                 else if (input == "q")
                 {
@@ -162,73 +182,7 @@ namespace pamela_soulis_project0App
 }
                 
             
-            
 
-        
-        //display the order:
-        //List<Orders> firstorder = context.Orders
-        //    .ToList();
-        //foreach (var order in firstorder)
-        //{
-        //    Console.WriteLine($"This order was placed in store number {order.LocationId} and its order ID is {order.OrderId}");
-        //}
-
-
-
-
-
-
-
-
-
-        //public Customer FindCustomer(string lastname)
-        //{
-        //    using var context = new pamelasoulisproject0Context(Options);
-        //    List<Customer> newcustomer = context.Customer
-        //    //    .Where(c => (c.LastName == lastname) && (c.FirstName == firstname))
-        //          .ToList();
-        //    return newcustomer;
-
-        //    
-        //}
-
-        
-
-
-
-
-
-        //get customer name
-        // get the location
-        //get the product
-        // var orders = context.Orders
-        //  .Include(o => o.OrderLine)
-        //  .FirstOrDefault(o => o.CustomerId == the one from user input, and LocationId == the one user inputed)
-
-
-
-
-
-        
-
-
-            //Console.WriteLine("\nAdding some data...");
-            //AddSomeDataFromUserInput();
-
-            //DisplayData();
-
-
-            //Console.WriteLine("\nUpdating some data...");
-            //UpdateSomeData();
-
-            //DisplayData();
-
-            //Console.WriteLine("\nDeleting some data...");
-            //DeleteSomeData();
-
-            //DisplayData();
-
-        //}
 
         //public static void DeleteSomeData()
         //{
@@ -325,142 +279,138 @@ namespace pamela_soulis_project0App
             //context.Product.Add(product3);
             //context.SaveChanges();
 
-            //ADD PRODUCTS TO THE ORDERLINE
-            //var products = context.Product
-            //    .Include(p => p.OrderLine)
-            //    .FirstOrDefault(p => p.Name == "Jeans");
-            //products = new 
+           
 
 
 
 
 
-            //place a hard coded order:
-            //using var context = new pamelasoulisproject0Context(Options);
-            //var neworder = new Orders { LocationId = 5, CustomerId = 1 };
-            //context.Orders.Add(neworder);
-            //context.SaveChanges();
+//place a hard coded order:
+//using var context = new pamelasoulisproject0Context(Options);
+//var neworder = new Orders { LocationId = 5, CustomerId = 1 };
+//context.Orders.Add(neworder);
+//context.SaveChanges();
 
-            //place an order based on customerID and locationID
-            //var neworder = context.Orders
-            //.Include(o => o.)
+//place an order based on customerID and locationID
+//var neworder = context.Orders
+//.Include(o => o.)
 
 
 
 
 
 
-            // create course if it doesn't exist
-            // returns the first result that fits the condition: "Or Default" : returns null instead 
-            //  of throwing exceptions in case of no result 
-            //var course = context.Course
-            //    .Include(c => c.Enrollment)
-            //    .FirstOrDefault(c => c.CourseNumber == "PHYS101");
-            //if (course == null)
-            //{
-            //    course = new Course { CourseNumber = "PHYS101" };
-            //    context.Course.Add(course);
-            //}
+// create course if it doesn't exist
+// returns the first result that fits the condition: "Or Default" : returns null instead 
+//  of throwing exceptions in case of no result 
+//var course = context.Course
+//    .Include(c => c.Enrollment)
+//    .FirstOrDefault(c => c.CourseNumber == "PHYS101");
+//if (course == null)
+//{
+//    course = new Course { CourseNumber = "PHYS101" };
+//    context.Course.Add(course);
+//}
 
-            // add the student (and an enrollment indirecty via the course)
-            //      so, you can add and update stuff via the navigation properties
-            //course.Enrollment.Add(new Enrollment { Student = student });
-            //context.Customer.Add(customer); //don't need this line anymore bc add the student via the navigation properties
-
-
-
-
-
-        //}
-
-        //private static void DisplayData()
-        //{
-        //using var context = new pamelasoulisproject0Context(Options);
+// add the student (and an enrollment indirecty via the course)
+//      so, you can add and update stuff via the navigation properties
+//course.Enrollment.Add(new Enrollment { Student = student });
+//context.Customer.Add(customer); //don't need this line anymore bc add the student via the navigation properties
 
 
 
 
-        //display the order:
-        //List<Orders> firstorder = context.Orders
-        //    .ToList();
-        //foreach (var order in firstorder)
-        //{
-        //    Console.WriteLine($"This order was placed in store number {order.LocationId} and its order ID is {order.OrderId}");
-        //}
+
+//}
+
+//private static void DisplayData()
+//{
+//using var context = new pamelasoulisproject0Context(Options);
 
 
 
 
-        //retrieves the employees that have sales in their title
-        //List<Employee> salespeople = context.Employee
-        //    .Where(e => e.Title.Contains("sales"))
-        //    .ToList();
-
-        //foreach (Employee person in salespeople)
-        //{
-        //    Console.WriteLine($"{person.Title} {person.FirstName} {person.LastName}");
-        //}
-
-
-
-        // retrieves the worker in class Worker who has Pamela as a firstname
-        //List<Worker> TheOneIWant = context.Worker
-        //    .Where(w => w.FirstName.Contains("Pamela"))
-        //    .ToList();
-
-        //foreach (Worker person in TheOneIWant)
-        //{
-        //    Console.WriteLine($"This worker has {person.Id} as an ID and her name is {person.FirstName} {person.LastName}");
-
-        //}
+//display the order:
+//List<Orders> firstorder = context.Orders
+//    .ToList();
+//foreach (var order in firstorder)
+//{
+//    Console.WriteLine($"This order was placed in store number {order.LocationId} and its order ID is {order.OrderId}");
+//}
 
 
 
 
-        // retrieves employee from class Employee with FirstName Jane
-        //List<Employee> GetAddedEmployee = context.Employee
-        //    .Where(e => e.FirstName.Contains("Jane"))
-        //    .ToList();
+//retrieves the employees that have sales in their title
+//List<Employee> salespeople = context.Employee
+//    .Where(e => e.Title.Contains("sales"))
+//    .ToList();
 
-        //foreach (Employee person in GetAddedEmployee)
-        //{
-        //    Console.WriteLine($"This employee's first name is {person.FirstName}");
-        //}
+//foreach (Employee person in salespeople)
+//{
+//    Console.WriteLine($"{person.Title} {person.FirstName} {person.LastName}");
+//}
 
 
-        // Nick code
-        //this gets the entire table's worth of data: next line of code lets you access the Student table
-        //      then you use the Include method (eager loading) to relate to Enrollment
-        //      and then to Course
-        //List<Student> students = context.Student
-        //    .Include(s => s.Enrollment) // access the navigation property
-        //        .ThenInclude(e => e.Course) // access the navigation property
-        //    .ToList();
 
-        //foreach (var student in students)
-        //{
-        //    // take each element of the Enrollment collection and get the course number: 
-        //    var courses = student.Enrollment.Select(e => e.Course.CourseNumber);
+// retrieves the worker in class Worker who has Pamela as a firstname
+//List<Worker> TheOneIWant = context.Worker
+//    .Where(w => w.FirstName.Contains("Pamela"))
+//    .ToList();
 
-        //    // join the courses together: convert a string 
-        //    var coursesString = string.Join(",", courses);
-        //    Console.WriteLine($"{student.Id} {student.Name}: {coursesString}");
-        //}
+//foreach (Worker person in TheOneIWant)
+//{
+//    Console.WriteLine($"This worker has {person.Id} as an ID and her name is {person.FirstName} {person.LastName}");
+
+//}
 
 
 
 
-        // display the order based on the customer?
-        //List<Customer> customers = context.Customer
-        //    .Include(c => c.Orders)
-        //        .ThenInclude(o => o.OrderLine)
-        //    .ToList();
-        //foreach (var customer in customers)
-        //{
-        //    var OrderHistory = customer.Orders.Select(o => o.OrderLine.OrderId);
-        //}
+// retrieves employee from class Employee with FirstName Jane
+//List<Employee> GetAddedEmployee = context.Employee
+//    .Where(e => e.FirstName.Contains("Jane"))
+//    .ToList();
 
-        //}
+//foreach (Employee person in GetAddedEmployee)
+//{
+//    Console.WriteLine($"This employee's first name is {person.FirstName}");
+//}
 
-    //}
+
+// Nick code
+//this gets the entire table's worth of data: next line of code lets you access the Student table
+//      then you use the Include method (eager loading) to relate to Enrollment
+//      and then to Course
+//List<Student> students = context.Student
+//    .Include(s => s.Enrollment) // access the navigation property
+//        .ThenInclude(e => e.Course) // access the navigation property
+//    .ToList();
+
+//foreach (var student in students)
+//{
+//    // take each element of the Enrollment collection and get the course number: 
+//    var courses = student.Enrollment.Select(e => e.Course.CourseNumber);
+
+//    // join the courses together: convert a string 
+//    var coursesString = string.Join(",", courses);
+//    Console.WriteLine($"{student.Id} {student.Name}: {coursesString}");
+//}
+
+
+
+
+// display the order based on the customer?
+//List<Customer> customers = context.Customer
+//    .Include(c => c.Orders)
+//        .ThenInclude(o => o.OrderLine)
+//    .ToList();
+//foreach (var customer in customers)
+//{
+//    var OrderHistory = customer.Orders.Select(o => o.OrderLine.OrderId);
+//}
+
+//}
+
+//}
 //}
