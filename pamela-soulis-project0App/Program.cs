@@ -27,13 +27,7 @@ namespace pamela_soulis_project0App
 
 
 
-        public static void AddAnOrder(int orderid, int productid, int quantity)
-        {
-            using var context = new pamelasoulisproject0Context(Options);
-            var neworder = new pamela_soulis_project0DataAccess.Model.OrderLine { OrderId = orderid, ProductId = productid, Quantity = quantity };
-            context.OrderLine.Add(neworder);
-            context.SaveChanges();
-        }
+        
         public static int NewOrder()
         {
             using var context = new pamelasoulisproject0Context(Options);
@@ -52,7 +46,7 @@ namespace pamela_soulis_project0App
             GenericRepository<pamela_soulis_project0DataAccess.Model.Product, pamelasoulisproject0Library.Product> prepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Product, pamelasoulisproject0Library.Product>(context);
             GenericRepository<pamela_soulis_project0DataAccess.Model.Inventory, pamelasoulisproject0Library.Inventory> irepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Inventory, pamelasoulisproject0Library.Inventory>(context);
             GenericRepository<pamela_soulis_project0DataAccess.Model.OrderLine, pamelasoulisproject0Library.OrderLine> olrepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.OrderLine, pamelasoulisproject0Library.OrderLine>(context);
-
+            GenericRepository<pamela_soulis_project0DataAccess.Model.Orders, pamelasoulisproject0Library.Orders> orepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Orders, pamelasoulisproject0Library.Orders>(context);
 
 
             Console.WriteLine("Hello! Welcome to the store!");
@@ -62,7 +56,7 @@ namespace pamela_soulis_project0App
                 Console.WriteLine("b:\tYou are a new customer.");
                 Console.WriteLine("c:\tYou are a returning customer.");
                 Console.WriteLine("d:\tYou want to place an order.");
-               
+                Console.WriteLine("x:\tTo view your past orders.");
                 Console.WriteLine("q:\tExit.");
                 var input = Console.ReadLine();
 
@@ -102,25 +96,40 @@ namespace pamela_soulis_project0App
                     crepo.SaveToDB();
                 }
 
-                //get a customer by id and display their orderhistory
+                //this works
+                //get a customer by id
                 else if (input == "c")
                 {
 
-                    Console.WriteLine("Enter your id number: ");
+                    Console.WriteLine("Enter your ID number: ");
                     int id = int.Parse(Console.ReadLine());
-                    //var newcustomer = new pamela_soulis_project0DataAccess.Model.Customer { CustomerId = id };
-                    //var ReturningCustomerId = crepo.GetById(id);
-                    var TheCustomer = crepo.GetAll()
-                        .Where(c => c.CustomerId == id)
-                        .ToList();
-                    foreach (var person in TheCustomer)
-                    { 
-                        Console.WriteLine($"Your name is {person.FirstName} {person.LastName}.");
-
-                    }
+                    var ReturningCustomer = crepo.GetById(id);
+                    Console.WriteLine($"Hi {ReturningCustomer.FirstName} {ReturningCustomer.LastName}!");
                 }
+                //display the date and time of last order
+                else if (input == "x")
+                {
+                    Console.WriteLine("Enter your order ID number: ");
+                    int id = int.Parse(Console.ReadLine());
+                    var ReturningCustomerOrderHistory = orepo.GetById(id);
+                    Console.WriteLine($"You placed your last order at {ReturningCustomerOrderHistory.Date} {ReturningCustomerOrderHistory.Time}");
+                }  
+                //can also do like the tracks example and find all products
+                //or just getall() from orders
 
-                //this workd
+                    //var TheCustomer = crepo.GetAll()
+                    //    .Where(c => c.CustomerId == id)
+                    //    .ToList();
+                    //foreach (var person in TheCustomer)
+                    //{ 
+                    //    Console.WriteLine($"Your name is {person.FirstName} {person.LastName}.");
+
+                    //}
+
+                    
+               
+
+                //this works
                 //Display products, display inventory, add to OrderLine
                 else if (input == "d")
                 {
@@ -153,6 +162,7 @@ namespace pamela_soulis_project0App
                     olrepo.Insert(neworder);
                     olrepo.SaveToDB();
 
+                    //now need to add to Orders once the Orderline is added
                 }
                 
 
