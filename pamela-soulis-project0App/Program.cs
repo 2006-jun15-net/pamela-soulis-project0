@@ -68,14 +68,13 @@ namespace pamela_soulis_project0App
                 //display customer order history
                 if (input == "y")
                 {
-                    var maxAmountForOrder = invrepo.GetProductQuantity(1);
-                    Console.WriteLine($"{maxAmountForOrder.Quantity}");
-                    //var customerOrderHistory = crepo.GetWithNavigations(1);
-                    //foreach (var order in customerOrderHistory.Orders)
-                    //{
-                    //    Console.WriteLine($"{order.Date} {string.Join(", ", order.OrderLine.Select(ol=>ol.Product.Name))}");
-                    //}
-                                        
+
+                    var customerOrderHistory = crepo.GetWithNavigations(1);
+                    foreach (var order in customerOrderHistory.Orders)
+                    {
+                        Console.WriteLine($"{order.Date} {string.Join(", ", order.OrderLine.Select(ol => ol.Product.Name))}");
+                    }
+
 
                 }
                 //this works, but need the date
@@ -183,19 +182,37 @@ namespace pamela_soulis_project0App
                     {
                         Console.WriteLine("Invalid input, please enter a valid product quantity.");
                     }
-                    //var maxAmountForOrder = invrepo.GetProductQuantity(product1);
-                    //Console.WriteLine(maxAmountForOrder);
+                    //get the max amount available to order for this product
+                    var maxAmountForOrder = invrepo.GetProductQuantity(product1);
+                    Console.WriteLine($"{maxAmountForOrder.Quantity}");
+                    if(maxAmountForOrder.Quantity == 0)
+                    {
+                        Console.WriteLine($"We apologize, but this product is out of stock.");
+                    }
+                    else if (amountOfProduct > maxAmountForOrder.Quantity)
+                    {
+                        Console.WriteLine($" Oups, seems like you tried to order too much! We only have {maxAmountForOrder.Quantity}.");
+                    }
+                    else
+                    {
+                        //add the order 
+                        //int thisNewOrderId = ordrepo.NewOrder(); //orderid
+                        var newOrder = new pamelasoulisproject0Library.Orders { CustomerId = orderingCustomerId, LocationId = location1 };
+                        ordrepo.Insert(newOrder);
+                        ordrepo.SaveToDB();
+                        //var thisNewOrder = new pamelasoulisproject0Library.OrderLine { OrderId = thisNewOrderId, ProductId = product1, Quantity = amountOfProduct };
+                        //.Insert(thisNewOrder);
+                        //olrepo.SaveToDB();
+
+                        //decrease inventory: needs fixing in the UPDATE method
+                        maxAmountForOrder.Quantity = maxAmountForOrder.Quantity - amountOfProduct;
+                        invrepo.Update(maxAmountForOrder);
+                        invrepo.SaveToDB();
+
+                    }
 
 
 
-
-                    int thisNewOrderId = ordrepo.NewOrder(); //orderid
-                    //var newOrder = new pamelasoulisproject0Library.Orders { CustomerId = orderingCustomerId, LocationId = location1 };
-                    //ordrepo.Insert(newOrder);
-                    //ordrepo.SaveToDB();
-                    var thisNewOrder = new pamelasoulisproject0Library.OrderLine { OrderId = thisNewOrderId, ProductId = product1, Quantity = amountOfProduct };
-                    olrepo.Insert(thisNewOrder);
-                    olrepo.SaveToDB();
 
                     //display order details
                     //var customerOrderHistory = crepo.GetWithNavigations(orderingCustomerId);
