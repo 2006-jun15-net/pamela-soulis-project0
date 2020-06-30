@@ -13,6 +13,6 @@ namespace pamelasoulisproject0Library
         public string LastName { get; set; }
 
 
-        public List<Orders> CustomerOrders { get; set; } = new List<Orders>(); 
+        public List<Orders> Orders { get; set; } = new List<Orders>(); 
     }
 }

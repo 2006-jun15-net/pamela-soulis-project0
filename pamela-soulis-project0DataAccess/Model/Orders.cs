@@ -12,7 +12,7 @@ namespace pamela_soulis_project0DataAccess.Model
 
         public int OrderId { get; set; }
         public int LocationId { get; set; }
-        public int CustomerId { get; set; }
+        public int CustomerId { get; set; } 
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
 

@@ -11,8 +11,8 @@ namespace pamelasoulisproject0Library
         public string Name { get; set; }
         public decimal Price { get; set; }
 
-        public List<OrderLine> TheOrders { get; set; } = new List<OrderLine>();
-        public List<Inventory> TheInventory { get; set; } = new List<Inventory>();  
+        public List<OrderLine> OrderLine { get; set; } = new List<OrderLine>();
+        public List<Inventory> Inventory { get; set; } = new List<Inventory>();  
     }
 }
- 
+  

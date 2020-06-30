@@ -11,7 +11,7 @@ namespace pamela_soulis_project0DataAccess.Model
         }
 
         public int CustomerId { get; set; }
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } 
         public string LastName { get; set; }
 
         public virtual ICollection<Orders> Orders { get; set; }

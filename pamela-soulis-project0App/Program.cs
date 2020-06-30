@@ -2,14 +2,15 @@
 using Microsoft.Extensions.Logging;
 using pamela_soulis_project0DataAccess;
 using pamela_soulis_project0DataAccess.Model;
-using pamela_soulis_project0Library.Repositories;
-using pamelasoulisproject0Library; 
+using pamelasoulisproject0Library.Repositories;
+using pamelasoulisproject0Library;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Dynamic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using pamela_soulis_project0Library.Repositories;
 
 namespace pamela_soulis_project0App
 {
@@ -28,25 +29,23 @@ namespace pamela_soulis_project0App
 
 
         
-        public static int NewOrder()
-        {
-            using var context = new pamelasoulisproject0Context(Options);
-            int thisOrderId = context.Orders.Count() + 2;
-            return thisOrderId;
-
-        }
-
         
 
 
         static void Main(string[] args)
         {
-            GenericRepository<pamela_soulis_project0DataAccess.Model.Customer, pamelasoulisproject0Library.Customer > crepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Customer, pamelasoulisproject0Library.Customer>(context);
+            CustomerRepository crepo = new CustomerRepository(context);
+            LocationRepository locrepo = new LocationRepository(context);
+            InventoryRepository invrepo = new InventoryRepository(context);
+            OrdersRepository ordrepo = new OrdersRepository(context);
             GenericRepository<pamela_soulis_project0DataAccess.Model.Location, pamelasoulisproject0Library.Location> lrepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Location, pamelasoulisproject0Library.Location>(context);
             GenericRepository<pamela_soulis_project0DataAccess.Model.Product, pamelasoulisproject0Library.Product> prepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Product, pamelasoulisproject0Library.Product>(context);
-            GenericRepository<pamela_soulis_project0DataAccess.Model.Inventory, pamelasoulisproject0Library.Inventory> irepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Inventory, pamelasoulisproject0Library.Inventory>(context);
+            //GenericRepository<pamela_soulis_project0DataAccess.Model.Inventory, pamelasoulisproject0Library.Inventory> irepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Inventory, pamelasoulisproject0Library.Inventory>(context);
             GenericRepository<pamela_soulis_project0DataAccess.Model.OrderLine, pamelasoulisproject0Library.OrderLine> olrepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.OrderLine, pamelasoulisproject0Library.OrderLine>(context);
-            GenericRepository<pamela_soulis_project0DataAccess.Model.Orders, pamelasoulisproject0Library.Orders> orepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Orders, pamelasoulisproject0Library.Orders>(context);
+            //GenericRepository<pamela_soulis_project0DataAccess.Model.Orders, pamelasoulisproject0Library.Orders> orepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Orders, pamelasoulisproject0Library.Orders>(context);
+
+
+            
 
 
             Console.WriteLine("Hello! Welcome to the store!");
@@ -56,29 +55,54 @@ namespace pamela_soulis_project0App
                 Console.WriteLine("b:\tYou are a new customer.");
                 Console.WriteLine("c:\tYou are a returning customer.");
                 Console.WriteLine("d:\tYou want to place an order.");
-                Console.WriteLine("x:\tTo view your past orders.");
+                Console.WriteLine("x:\tTo view your past order details.");
+                Console.WriteLine("y:\tTo Display customer order history.");
+                Console.WriteLine("z:\tTo Display location order history.");
+
+
                 Console.WriteLine("q:\tExit.");
                 var input = Console.ReadLine();
+
+
+                //this works, but need the date
+                //display customer order history
+                if (input == "y")
+                {
+                    var maxAmountForOrder = invrepo.GetProductQuantity(1);
+                    Console.WriteLine($"{maxAmountForOrder.Quantity}");
+                    //var customerOrderHistory = crepo.GetWithNavigations(1);
+                    //foreach (var order in customerOrderHistory.Orders)
+                    //{
+                    //    Console.WriteLine($"{order.Date} {string.Join(", ", order.OrderLine.Select(ol=>ol.Product.Name))}");
+                    //}
+                                        
+
+                }
+                //this works, but need the date
+                //display location order history
+                else if (input == "z")
+                {
+                    var locationOrderHistory = locrepo.GetOrderHistory(5);
+                    foreach (var order in locationOrderHistory.Orders)
+                    {
+                        Console.WriteLine($"{order.Date} {string.Join(", ", order.OrderLine.Select(ol => ol.Product.Name))}");
+                    }
+                }
+                
+
+
 
                 //this works
                 //display store locations to customers
                 if (input == "a")
                 {
-                    var TheLocationsAvailable = lrepo.GetAll().ToList();
-                    foreach (var store in TheLocationsAvailable)
-                    {
-                        Console.WriteLine($"Location: {store.Name}.");
-                        //}
-                        //while (TheLocationsAvailable.Count > 0)
-                        //{
-                        //for( var i = 1; i <= TheLocationsAvailable.Count; i++)
-                        //{
-                        //    var store = TheLocationsAvailable[i - 1];
-                        //    var storeString = $"{i}: \"{store.Name}\"";
-                        //    Console.WriteLine(storeString);
-                        //}
+                   var TheLocationsAvailable = lrepo.GetAll().ToList();
+                   foreach (var store in TheLocationsAvailable)
+                   {
+                       Console.WriteLine($"Location: {store.Name}.");
 
-                    }
+
+                   }
 
                 }
 
@@ -111,34 +135,27 @@ namespace pamela_soulis_project0App
                 {
                     Console.WriteLine("Enter your order ID number: ");
                     int id = int.Parse(Console.ReadLine());
-                    var ReturningCustomerOrderHistory = orepo.GetById(id);
+                    var ReturningCustomerOrderHistory = ordrepo.GetById(id); //orderId
                     Console.WriteLine($"You placed your last order at {ReturningCustomerOrderHistory.Date} {ReturningCustomerOrderHistory.Time}");
-                }  
-                //can also do like the tracks example and find all products
-                //or just getall() from orders
+                }
+                
 
-                    //var TheCustomer = crepo.GetAll()
-                    //    .Where(c => c.CustomerId == id)
-                    //    .ToList();
-                    //foreach (var person in TheCustomer)
-                    //{ 
-                    //    Console.WriteLine($"Your name is {person.FirstName} {person.LastName}.");
 
-                    //}
-
-                    
-               
-
-                //this works
+                //this works, but not w/ separation
                 //Display products, display inventory, add to OrderLine
                 else if (input == "d")
                 {
+
+                    Console.WriteLine("Enter your customer ID number: ");
+                    int orderingCustomerId = int.Parse(Console.ReadLine());
+                    
+                     
                     var TheProductsAvailable = prepo.GetAll().ToList();
                     foreach (var item in TheProductsAvailable)
                     {
 
                         Console.WriteLine($"Product: {item.Name} with Id {item.ProductId}. We are selling this item for ${item.Price}");
-                    
+
                     }
 
                     Console.WriteLine("Enter a location ID to place an order at this store.");
@@ -147,24 +164,49 @@ namespace pamela_soulis_project0App
                     Console.WriteLine("Enter a product ID to add it to your cart.");
                     int product1 = int.Parse(Console.ReadLine());
 
-                    var TheAmountAvailable = irepo.GetAll()
-                            .Where(i => (i.ProductId == product1 && i.LocationId == location1))
-                            .ToList();
-                    foreach (var amount in TheAmountAvailable)
+                    //display the amount left of a product at a particular location
+                    var locationInventory = locrepo.GetWithNavigations(location1);
+                    
+                    foreach (var productAmount in locationInventory.Inventory)
                     {
-                        Console.WriteLine($"We have {amount.Quantity} left");
+                        if (productAmount.ProductId == product1)
+                        {
+                            Console.WriteLine($" We have {productAmount.Quantity} left at this location");
+                        }
+                        
+                   
                     }
-
+                    //check if customer asks for too much product based on inventory available
                     Console.WriteLine("How many would you like?");
-                    int amount1 = int.Parse(Console.ReadLine());
-                    int thisNewOrderId = NewOrder();
-                    var neworder = new pamelasoulisproject0Library.OrderLine { OrderId = thisNewOrderId, ProductId = product1, Quantity = amount1 };
-                    olrepo.Insert(neworder);
+                    int amountOfProduct = int.Parse(Console.ReadLine());
+                    while (amountOfProduct <= 0)
+                    {
+                        Console.WriteLine("Invalid input, please enter a valid product quantity.");
+                    }
+                    //var maxAmountForOrder = invrepo.GetProductQuantity(product1);
+                    //Console.WriteLine(maxAmountForOrder);
+
+
+
+
+                    int thisNewOrderId = ordrepo.NewOrder(); //orderid
+                    //var newOrder = new pamelasoulisproject0Library.Orders { CustomerId = orderingCustomerId, LocationId = location1 };
+                    //ordrepo.Insert(newOrder);
+                    //ordrepo.SaveToDB();
+                    var thisNewOrder = new pamelasoulisproject0Library.OrderLine { OrderId = thisNewOrderId, ProductId = product1, Quantity = amountOfProduct };
+                    olrepo.Insert(thisNewOrder);
                     olrepo.SaveToDB();
 
-                    //now need to add to Orders once the Orderline is added
-                }
+                    //display order details
+                    //var customerOrderHistory = crepo.GetWithNavigations(orderingCustomerId);
+                    //foreach (var order in customerOrderHistory.Orders)
+                    //{
+                    //    Console.WriteLine($"Congratulations! Your order for {string.Join(", ", order.OrderLine.Select(ol => ol.Product.Name))} was placed on {order.Date}");
+                    //}
+                } 
+
                 
+
 
                 else if (input == "q")
                 {
@@ -266,46 +308,6 @@ namespace pamela_soulis_project0App
             //context.SaveChanges();
 
             //    //throw new NotImplementedException();
-
-
-
-
-            // add a location:
-            //using var context = new pamelasoulisproject0Context(Options);
-            //var store1 = new Location { Name = "Clothing Downtown" };
-            //var store2 = new Location { Name = "Clothing Uptown" };
-            //context.Location.Add(store1);
-            //context.Location.Add(store2);
-            //context.SaveChanges();
-
-
-            // ADDED PRODUCTS TO DB
-            //using var context = new pamelasoulisproject0Context(Options);
-            //var product1 = new Product { Name = "Jeans" , Price = 40};
-            //var product2 = new Product { Name = "Shirt" , Price = 25};
-            //var product3 = new Product { Name = "Shoes", Price = 70};
-            //context.Product.Add(product1);
-            //context.Product.Add(product2);
-            //context.Product.Add(product3);
-            //context.SaveChanges();
-
-           
-
-
-
-
-
-//place a hard coded order:
-//using var context = new pamelasoulisproject0Context(Options);
-//var neworder = new Orders { LocationId = 5, CustomerId = 1 };
-//context.Orders.Add(neworder);
-//context.SaveChanges();
-
-//place an order based on customerID and locationID
-//var neworder = context.Orders
-//.Include(o => o.)
-
-
 
 
 

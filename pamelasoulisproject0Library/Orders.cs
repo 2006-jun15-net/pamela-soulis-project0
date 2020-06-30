@@ -14,7 +14,7 @@ namespace pamelasoulisproject0Library
         public TimeSpan Time { get; set; }
 
 
-        public List<OrderLine> theorders { get; set; } = new List<OrderLine>();
+        public List<OrderLine> OrderLine { get; set; } = new List<OrderLine>();
     }
 }
  
