@@ -28,16 +28,25 @@ namespace pamelasoulisproject0Library.Repositories
 
         }
 
-        public Orders GetWithNavigations(int orderid)  
+        public Orders GetWithNavigations(int orderid)
         {
             var pastOrder = table
                 .Include(o => o.OrderLine)
                     .ThenInclude(or => or.Product);
-                //.FirstOrDefault();
+            //.FirstOrDefault();
 
             var businessOrders = mapper.Map<Orders>(pastOrder);
-            return businessOrders; 
+            return businessOrders;
+        }
+
+        //add an order for customer at a location
+        public Orders AddingANewOrder(int customerId, int locationId)
+        {
+            DateTime date = DateTime.Now;
+            var orderDate = DateTime.Today;
+            var orderTime = date.TimeOfDay;
+            var theOrderToBeAdded = new Orders { CustomerId = customerId, LocationId = locationId, Date = orderDate, Time = orderTime };
+            return theOrderToBeAdded;
         }
     }
-
 }

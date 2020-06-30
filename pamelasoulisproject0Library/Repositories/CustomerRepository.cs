@@ -41,7 +41,11 @@ namespace pamelasoulisproject0Library.Repositories
             var businessCustomer = mapper.Map<Customer>(customer);
             return businessCustomer;
         }
+        public Customer AddingANewCustomer(string customerfirstname, string customerlastname)
+        {
+            var theCustomerToBeAdded = new Customer { FirstName = customerfirstname, LastName = customerlastname };
+            return theCustomerToBeAdded;
+        }
 
-        
     }
 }

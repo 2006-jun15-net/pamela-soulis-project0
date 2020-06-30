@@ -64,20 +64,21 @@ namespace pamela_soulis_project0App
                 var input = Console.ReadLine();
 
 
-                //this works, but need the date
+                //this works
                 //display customer order history
                 if (input == "y")
                 {
 
-                    var customerOrderHistory = crepo.GetWithNavigations(1);
+
+                    var customerOrderHistory = crepo.GetWithNavigations(5);
                     foreach (var order in customerOrderHistory.Orders)
                     {
                         Console.WriteLine($"{order.Date} {string.Join(", ", order.OrderLine.Select(ol => ol.Product.Name))}");
-                    }
+                    }//.SelectMany(i => i.InvoiceLine.Select(i1 => i1.Track));
 
 
                 }
-                //this works, but need the date
+                //this works
                 //display location order history
                 else if (input == "z")
                 {
@@ -100,10 +101,10 @@ namespace pamela_soulis_project0App
                    {
                        Console.WriteLine($"Location: {store.Name}.");
 
-
                    }
 
                 }
+
 
                 //this works
                 //add a customer to the DB given user input
@@ -114,10 +115,13 @@ namespace pamela_soulis_project0App
                     string name1 = Console.ReadLine();
                     Console.WriteLine("Enter your lastname: ");
                     string name2 = Console.ReadLine();
-                    var newcustomer = new pamelasoulisproject0Library.Customer { FirstName = name1, LastName = name2 };
-                    crepo.Insert(newcustomer);
+                    var newCustomer = crepo.AddingANewCustomer(name1, name2);
+                    crepo.Insert(newCustomer);
                     crepo.SaveToDB();
                 }
+
+
+
 
                 //this works
                 //get a customer by id
@@ -129,7 +133,11 @@ namespace pamela_soulis_project0App
                     var ReturningCustomer = crepo.GetById(id);
                     Console.WriteLine($"Hi {ReturningCustomer.FirstName} {ReturningCustomer.LastName}!");
                 }
-                //display the date and time of last order
+
+
+
+
+                //display order details
                 else if (input == "x")
                 {
                     Console.WriteLine("Enter your order ID number: ");
@@ -140,8 +148,9 @@ namespace pamela_soulis_project0App
                 
 
 
-                //this works, but not w/ separation
-                //Display products, display inventory, add to OrderLine
+
+                //this works, but not the updated inventory + need to still do add to OrderLine method 
+                //Display products, display inventory, add an order
                 else if (input == "d")
                 {
 
@@ -184,7 +193,7 @@ namespace pamela_soulis_project0App
                     }
                     //get the max amount available to order for this product
                     var maxAmountForOrder = invrepo.GetProductQuantity(product1);
-                    Console.WriteLine($"{maxAmountForOrder.Quantity}");
+                    //Console.WriteLine($"{maxAmountForOrder.Quantity}");
                     if(maxAmountForOrder.Quantity == 0)
                     {
                         Console.WriteLine($"We apologize, but this product is out of stock.");
@@ -197,16 +206,18 @@ namespace pamela_soulis_project0App
                     {
                         //add the order 
                         //int thisNewOrderId = ordrepo.NewOrder(); //orderid
-                        var newOrder = new pamelasoulisproject0Library.Orders { CustomerId = orderingCustomerId, LocationId = location1 };
-                        ordrepo.Insert(newOrder);
-                        ordrepo.SaveToDB();
+                        //var newOrder = ordrepo.AddingANewOrder(orderingCustomerId, location1);
+                        //ordrepo.Insert(newOrder);
+                        //ordrepo.SaveToDB();
                         //var thisNewOrder = new pamelasoulisproject0Library.OrderLine { OrderId = thisNewOrderId, ProductId = product1, Quantity = amountOfProduct };
                         //.Insert(thisNewOrder);
                         //olrepo.SaveToDB();
 
                         //decrease inventory: needs fixing in the UPDATE method
                         maxAmountForOrder.Quantity = maxAmountForOrder.Quantity - amountOfProduct;
-                        invrepo.Update(maxAmountForOrder);
+                        //Console.WriteLine(maxAmountForOrder.Quantity);
+                        var newInventory = invrepo.UpdateTheQuantity(product1, location1, maxAmountForOrder.Quantity);
+                        Console.WriteLine($"We now only have {newInventory.Quantity} of this product.");
                         invrepo.SaveToDB();
 
                     }

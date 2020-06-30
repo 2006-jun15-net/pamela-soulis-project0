@@ -139,10 +139,7 @@ namespace pamela_soulis_project0Library.Repositories
             _context.SaveChanges();
         }
 
-        //public TBLL GetbyId(object id)
-        //{
-        //    throw new NotImplementedException();
-        //}
+
     }
 
 }
