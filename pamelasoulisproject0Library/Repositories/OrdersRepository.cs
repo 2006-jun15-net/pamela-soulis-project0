@@ -33,18 +33,6 @@ namespace pamelasoulisproject0Library.Repositories
 
         }
 
-        //public Orders GetWithNavigations(int orderid)
-        //{
-        //    var pastOrder = table
-        //        .Include(o => o.OrderLine)
-        //            .ThenInclude(or => or.Product);
-        //    //.FirstOrDefault();
-
-        //    var businessOrders = mapper.Map<Orders>(pastOrder);
-        //    return businessOrders;
-        //}
-
-
 
         /// <summary>
         /// Returns the order to be added to the database, given customer ID and location ID
