@@ -20,26 +20,38 @@ namespace pamelasoulisproject0Library.Repositories
 
         }
 
+
+        /// <summary>
+        /// Count for next order ID
+        /// </summary>
+        /// <returns></returns>
         public int NewOrder()
         {
 
-            int thisOrderId = table.Count() + 1;
+            int thisOrderId = table.Count() + 3;
             return thisOrderId;
 
         }
 
-        public Orders GetWithNavigations(int orderid)
-        {
-            var pastOrder = table
-                .Include(o => o.OrderLine)
-                    .ThenInclude(or => or.Product);
-            //.FirstOrDefault();
+        //public Orders GetWithNavigations(int orderid)
+        //{
+        //    var pastOrder = table
+        //        .Include(o => o.OrderLine)
+        //            .ThenInclude(or => or.Product);
+        //    //.FirstOrDefault();
 
-            var businessOrders = mapper.Map<Orders>(pastOrder);
-            return businessOrders;
-        }
+        //    var businessOrders = mapper.Map<Orders>(pastOrder);
+        //    return businessOrders;
+        //}
 
-        //add an order for customer at a location
+
+
+        /// <summary>
+        /// Returns the order to be added to the database, given customer ID and location ID
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="locationId"></param>
+        /// <returns></returns>
         public Orders AddingANewOrder(int customerId, int locationId)
         {
             DateTime date = DateTime.Now;

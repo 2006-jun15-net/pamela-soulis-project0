@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace pamela_soulis_project0DataAccess.Model
 {
+    /// <summary>
+    /// Data Access Entity Product, with a name, price, and ID number
+    /// </summary>
     public partial class Product : DataModel
     {
         public Product()

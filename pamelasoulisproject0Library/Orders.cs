@@ -4,6 +4,9 @@ using System.Text;
 
 namespace pamelasoulisproject0Library
 {
+    /// <summary>
+    /// Business Logic Orders, with an ID number and associated customer and location, and date/time that the order was placed on
+    /// </summary>
     public class Orders : BaseBusinessModel
     {
 

@@ -5,6 +5,10 @@ using System.Linq;
 
 namespace pamelasoulisproject0Library
 {
+
+    /// <summary>
+    /// Business Logic Location, with a store name and ID number
+    /// </summary>
     public class Location : BaseBusinessModel
     {
         public string Name { get; set; }

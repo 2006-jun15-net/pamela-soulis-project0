@@ -21,7 +21,12 @@ namespace pamelasoulisproject0Library.Repositories
         }
 
 
-        //this gives the quantity available for a particular product 
+        /// <summary>
+        /// Returns the quantity available for a particular product
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        
         public Inventory GetProductQuantity(int productId)
         {
             var inventoryAvailable = table
@@ -32,6 +37,15 @@ namespace pamelasoulisproject0Library.Repositories
             return businessInventory;
         }
 
+
+
+        /// <summary>
+        /// Method to update the quantity available for a product at a specific store location
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="locationId"></param>
+        /// <param name="newUpdatedQuantity"></param>
+        /// <returns></returns>
         public Inventory UpdateTheQuantity(int productId, int locationId, int newUpdatedQuantity)
         {
             var inventoryAvailable = table
@@ -49,10 +63,6 @@ namespace pamelasoulisproject0Library.Repositories
         //    //    EmployeeToUpdate.FirstName = "Alejandro";
         //    //    context.SaveChanges();
 
-
-        //    var course = context.Course.Find(1000); //get the course with PK 1000 (hardcoded in the Add method)
-        //    course.CourseNumber = "PHYS102";
-        //    context.SaveChanges();
 
     }
 }

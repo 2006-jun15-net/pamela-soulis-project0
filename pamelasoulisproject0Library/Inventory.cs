@@ -4,6 +4,9 @@ using System.Text;
 
 namespace pamelasoulisproject0Library
 {
+    /// <summary>
+    /// Junction table Inventory, with an associated location, product, and product quantity available
+    /// </summary>
     public class Inventory : BaseBusinessModel
     {
         public int LocationId { get; set; }

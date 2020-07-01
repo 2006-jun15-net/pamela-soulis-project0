@@ -20,7 +20,7 @@ namespace pamela_soulis_project0App
             = LoggerFactory.Create(builder => { builder.AddConsole(); });
 
         public static readonly DbContextOptions<pamelasoulisproject0Context> Options = new DbContextOptionsBuilder<pamelasoulisproject0Context>()
-            .UseLoggerFactory(MyLoggerFactory)
+            //.UseLoggerFactory(MyLoggerFactory)
             .UseSqlServer(SecretConfiguration.ConnectionString)
             .Options;
 
@@ -38,11 +38,9 @@ namespace pamela_soulis_project0App
             LocationRepository locrepo = new LocationRepository(context);
             InventoryRepository invrepo = new InventoryRepository(context);
             OrdersRepository ordrepo = new OrdersRepository(context);
-            GenericRepository<pamela_soulis_project0DataAccess.Model.Location, pamelasoulisproject0Library.Location> lrepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Location, pamelasoulisproject0Library.Location>(context);
             GenericRepository<pamela_soulis_project0DataAccess.Model.Product, pamelasoulisproject0Library.Product> prepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Product, pamelasoulisproject0Library.Product>(context);
-            //GenericRepository<pamela_soulis_project0DataAccess.Model.Inventory, pamelasoulisproject0Library.Inventory> irepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Inventory, pamelasoulisproject0Library.Inventory>(context);
             GenericRepository<pamela_soulis_project0DataAccess.Model.OrderLine, pamelasoulisproject0Library.OrderLine> olrepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.OrderLine, pamelasoulisproject0Library.OrderLine>(context);
-            //GenericRepository<pamela_soulis_project0DataAccess.Model.Orders, pamelasoulisproject0Library.Orders> orepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Orders, pamelasoulisproject0Library.Orders>(context);
+            
 
 
             
@@ -53,11 +51,15 @@ namespace pamela_soulis_project0App
             {
                 Console.WriteLine("a:\tDisplay store locations.");
                 Console.WriteLine("b:\tYou are a new customer.");
-                Console.WriteLine("c:\tYou are a returning customer.");
-                Console.WriteLine("d:\tYou want to place an order.");
-                Console.WriteLine("x:\tTo view your past order details.");
-                Console.WriteLine("y:\tTo Display customer order history.");
-                Console.WriteLine("z:\tTo Display location order history.");
+                //for presentation, to show that the new customer was added successfully
+                Console.WriteLine("c:\tDisplay customers.");
+
+                Console.WriteLine("d:\tYou are a returning customer.");
+                Console.WriteLine("e:\tYou want to view your order history.");
+                Console.WriteLine("f:\tYou want to place an order.");
+                //Console.WriteLine("x:\tTo view your past order details.");
+                //Console.WriteLine("y:\tTo Display customer order history.");
+                Console.WriteLine("z:\tTo display location order history.");
 
 
                 Console.WriteLine("q:\tExit.");
@@ -65,45 +67,18 @@ namespace pamela_soulis_project0App
 
 
                 //this works
-                //display customer order history
-                if (input == "y")
-                {
-
-
-                    var customerOrderHistory = crepo.GetWithNavigations(5);
-                    foreach (var order in customerOrderHistory.Orders)
-                    {
-                        Console.WriteLine($"{order.Date} {string.Join(", ", order.OrderLine.Select(ol => ol.Product.Name))}");
-                    }//.SelectMany(i => i.InvoiceLine.Select(i1 => i1.Track));
-
-
-                }
-                //this works
-                //display location order history
-                else if (input == "z")
-                {
-                    var locationOrderHistory = locrepo.GetOrderHistory(5);
-                    foreach (var order in locationOrderHistory.Orders)
-                    {
-                        Console.WriteLine($"{order.Date} {string.Join(", ", order.OrderLine.Select(ol => ol.Product.Name))}");
-                    }
-                }
-                
-
-
-
-                //this works
                 //display store locations to customers
                 if (input == "a")
                 {
-                   var TheLocationsAvailable = lrepo.GetAll().ToList();
-                   foreach (var store in TheLocationsAvailable)
-                   {
-                       Console.WriteLine($"Location: {store.Name}.");
+                    var TheLocationsAvailable = locrepo.GetAll().ToList();
+                    foreach (var store in TheLocationsAvailable)
+                    {
+                        Console.WriteLine($"Location: {store.Name} with ID number {store.LocationId}.");
 
-                   }
+                    }
 
                 }
+
 
 
                 //this works
@@ -121,37 +96,55 @@ namespace pamela_soulis_project0App
                 }
 
 
+                //display all customers to check if last one was added successfully
+                else if (input == "c")
+                {
+                    
+                    var AllTheCustomers = crepo.GetAll().ToList();
+                    foreach (var person in AllTheCustomers)
+                    {
+                        Console.WriteLine($"Here are our returning customers: {person.FirstName} {person.LastName} with ID number {person.CustomerId}.");
+
+                    }
+                                        
+                }
 
 
                 //this works
                 //get a customer by id
-                else if (input == "c")
+                else if (input == "d")
                 {
 
                     Console.WriteLine("Enter your ID number: ");
                     int id = int.Parse(Console.ReadLine());
                     var ReturningCustomer = crepo.GetById(id);
-                    Console.WriteLine($"Hi {ReturningCustomer.FirstName} {ReturningCustomer.LastName}!");
+                    Console.WriteLine($"Hi {ReturningCustomer.FirstName} {ReturningCustomer.LastName}! Welcome back!");
                 }
 
 
 
 
-                //display order details
-                else if (input == "x")
+
+                //this works
+                //display customer order history
+                else if (input == "e")
                 {
-                    Console.WriteLine("Enter your order ID number: ");
-                    int id = int.Parse(Console.ReadLine());
-                    var ReturningCustomerOrderHistory = ordrepo.GetById(id); //orderId
-                    Console.WriteLine($"You placed your last order at {ReturningCustomerOrderHistory.Date} {ReturningCustomerOrderHistory.Time}");
+                    Console.WriteLine("Enter your customer ID number: ");
+                    int CustomerIdOrderHistory = int.Parse(Console.ReadLine());
+
+                    var customerOrderHistory = crepo.GetWithNavigations(CustomerIdOrderHistory);
+                    foreach (var order in customerOrderHistory.Orders)
+                    {
+                        Console.WriteLine($"On {order.Date} at {order.Time} you ordered {string.Join(", ", order.OrderLine.Select(ol => ol.Product.Name))}");
+                    }
+
                 }
                 
 
 
-
                 //this works, but not the updated inventory + need to still do add to OrderLine method 
                 //Display products, display inventory, add an order
-                else if (input == "d")
+                else if (input == "f")
                 {
 
                     Console.WriteLine("Enter your customer ID number: ");
@@ -205,35 +198,57 @@ namespace pamela_soulis_project0App
                     else
                     {
                         //add the order 
-                        //int thisNewOrderId = ordrepo.NewOrder(); //orderid
-                        //var newOrder = ordrepo.AddingANewOrder(orderingCustomerId, location1);
-                        //ordrepo.Insert(newOrder);
-                        //ordrepo.SaveToDB();
-                        //var thisNewOrder = new pamelasoulisproject0Library.OrderLine { OrderId = thisNewOrderId, ProductId = product1, Quantity = amountOfProduct };
-                        //.Insert(thisNewOrder);
-                        //olrepo.SaveToDB();
+                        int thisNewOrderId = ordrepo.NewOrder();
+                        var newOrder = ordrepo.AddingANewOrder(orderingCustomerId, location1);
+                        ordrepo.Insert(newOrder);
+                        ordrepo.SaveToDB();
+                        var thisNewOrder = new pamelasoulisproject0Library.OrderLine { OrderId = thisNewOrderId, ProductId = product1, Quantity = amountOfProduct };
+                        olrepo.Insert(thisNewOrder);
+                        olrepo.SaveToDB();
+                        
+                        
 
-                        //decrease inventory: needs fixing in the UPDATE method
+                        //decrease inventory
                         maxAmountForOrder.Quantity = maxAmountForOrder.Quantity - amountOfProduct;
                         //Console.WriteLine(maxAmountForOrder.Quantity);
                         var newInventory = invrepo.UpdateTheQuantity(product1, location1, maxAmountForOrder.Quantity);
                         Console.WriteLine($"We now only have {newInventory.Quantity} of this product.");
                         invrepo.SaveToDB();
 
+                        var customerOrderHistory = crepo.GetWithNavigations(orderingCustomerId);
+                        foreach (var order in customerOrderHistory.Orders)
+                        {
+                            Console.WriteLine($"Congratulations! Your order for {string.Join(", ", order.OrderLine.Select(ol => ol.Product.Name))} was placed successfully.");
+                        }
                     }
 
+                }
+
+                //this works
+                //display location order history
+                else if (input == "z")
+                {
+                    Console.WriteLine("Please enter the location ID number.");
+                    int theLocationID = int.Parse(Console.ReadLine());
+                    var locationOrderHistory = locrepo.GetOrderHistory(theLocationID);
+                    foreach (var order in locationOrderHistory.Orders)
+                    {
+                        Console.WriteLine($"On {order.Date} {string.Join(", ", order.OrderLine.Select(ol => ol.Product.Name))} was ordered from this location");
+                    }
+                }
 
 
 
-                    //display order details
-                    //var customerOrderHistory = crepo.GetWithNavigations(orderingCustomerId);
-                    //foreach (var order in customerOrderHistory.Orders)
-                    //{
-                    //    Console.WriteLine($"Congratulations! Your order for {string.Join(", ", order.OrderLine.Select(ol => ol.Product.Name))} was placed on {order.Date}");
-                    //}
-                } 
 
-                
+                //display order details
+                else if (input == "x")
+                {
+                    Console.WriteLine("Enter your order ID number: ");
+                    int id = int.Parse(Console.ReadLine());
+                    var ReturningCustomerOrderHistory = ordrepo.GetById(id); //orderId
+                    Console.WriteLine($"You placed your last order at {ReturningCustomerOrderHistory.Date} {ReturningCustomerOrderHistory.Time}");
+                }
+
 
 
                 else if (input == "q")

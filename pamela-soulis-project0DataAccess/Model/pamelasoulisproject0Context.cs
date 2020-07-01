@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace pamela_soulis_project0DataAccess.Model
 {
+
+    /// <summary>
+    /// DbContext class for the database
+    /// </summary>
     public partial class pamelasoulisproject0Context : DbContext
     {
         public pamelasoulisproject0Context()

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace pamela_soulis_project0DataAccess.Model
 {
+    /// <summary>
+    /// Data Access Entity Location, with a store name and ID number
+    /// </summary>
     public partial class Location : DataModel
     {
         public Location()

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace pamela_soulis_project0DataAccess.Model
 {
+
+    /// <summary>
+    /// Junction table Inventory, with an associated location, product, and product quantity available
+    /// </summary>
     public partial class Inventory : DataModel
     {
         public int LocationId { get; set; }

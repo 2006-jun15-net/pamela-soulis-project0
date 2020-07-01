@@ -4,6 +4,10 @@ using System.Text;
 
 namespace pamelasoulisproject0Library
 {
+
+    /// <summary>
+    /// Junction table Orderline
+    /// </summary>
     public class OrderLine : BaseBusinessModel
     {
         public int OrderId { get; set; }

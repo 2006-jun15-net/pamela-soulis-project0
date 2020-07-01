@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace pamela_soulis_project0DataAccess.Model
 {
+    /// <summary>
+    /// Junction table Orderline
+    /// </summary>
     public partial class OrderLine : DataModel
     {
         public int OrderId { get; set; }

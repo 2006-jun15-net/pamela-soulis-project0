@@ -20,6 +20,10 @@ namespace pamela_soulis_project0Library.Repositories
 
         
 
+        /// <summary>
+        /// A generic repository for the database, with a Mapper for each Data Access/Business Logic Entity
+        /// </summary>
+        /// <param name="_context"></param>
         public GenericRepository(pamelasoulisproject0Context _context)
         {
             this._context = _context;
@@ -47,7 +51,10 @@ namespace pamela_soulis_project0Library.Repositories
             });
             mapper = config.CreateMapper();
         }
-
+        /// <summary>
+        /// Returns List of Business Logic Entity values
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<TBLL> GetAll()
         {
             var dataObjects = table.ToList();
@@ -101,7 +108,11 @@ namespace pamela_soulis_project0Library.Repositories
 
 
 
-
+        /// <summary>
+        /// Returns Business Logic Entity, searched for by Primary Key
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public TBLL GetById(int id)
         {
             var dataObjects = table.Find(id);
@@ -109,6 +120,10 @@ namespace pamela_soulis_project0Library.Repositories
             return businessObjects;
         }
 
+        /// <summary>
+        /// Takes in a Business Logic Entity and inserts a Data Access entry for given Model
+        /// </summary>
+        /// <param name="obj"></param>
         public void Insert(TBLL obj)
         {
 
@@ -134,6 +149,9 @@ namespace pamela_soulis_project0Library.Repositories
             //var businessObjects = mapper.Map<TDAL>(existing);
         }
 
+        /// <summary>
+        /// Perminent commit to the database
+        /// </summary>
         public void SaveToDB()
         {
             _context.SaveChanges();

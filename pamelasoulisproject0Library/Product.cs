@@ -4,6 +4,9 @@ using System.Text;
 
 namespace pamelasoulisproject0Library
 {
+    /// <summary>
+    /// Business Logic Product, with a name, price, and ID number
+    /// </summary>
     public class Product : BaseBusinessModel
     {
 

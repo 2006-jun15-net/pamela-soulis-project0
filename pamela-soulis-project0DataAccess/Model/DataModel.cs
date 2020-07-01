@@ -4,8 +4,11 @@ using System.Text;
 
 namespace pamela_soulis_project0DataAccess.Model
 {
+    /// <summary>
+    /// Base class for Data Access Entities
+    /// </summary>
     public class DataModel
     {
-        //public int Id { get; set; }
+        
     }
 }

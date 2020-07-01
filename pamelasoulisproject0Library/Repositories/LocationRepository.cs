@@ -21,7 +21,11 @@ namespace pamelasoulisproject0Library.Repositories
         }
 
 
-
+        /// <summary>
+        /// Returns a Location Business Entity, with access to navigation properties
+        /// </summary>
+        /// <param name="locationId"></param>
+        /// <returns></returns>
         public Location GetWithNavigations(int locationId)
         {
             var location = table
@@ -35,16 +39,22 @@ namespace pamelasoulisproject0Library.Repositories
         }
 
 
+
+        /// <summary>
+        /// Method to get the order history of a location
+        /// </summary>
+        /// <param name="locationId"></param>
+        /// <returns></returns>
         public Location GetOrderHistory(int locationId)
         {
             var location = table
                 .Include(l => l.Orders)
                     .ThenInclude(o => o.OrderLine)
                         .ThenInclude(o1 => o1.Product)
-                .FirstOrDefault();
+                .First(i => i.LocationId == locationId);
 
             var businessLocation = mapper.Map<Location>(location);
             return businessLocation; 
         }
     }
-}
+} 
