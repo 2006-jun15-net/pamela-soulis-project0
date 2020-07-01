@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0RWEo4azlf/L35tzSValu50IcwwMs8kvSZRlYCnkYd/POT85+YJoi8+1iPrTPjBgPwATojGOiGOytmVW6Sr3Pw==",
+  "dgSpecHash": "ptsQN+i9+xkbrUEQbl6QnqvZOyul9aOFB/lIy0ZYSUkRHro+xeO1VvyCnql/cgbw+5uX4fBYupxPu+gY2mTunA==",
   "success": true,
   "projectFilePath": "C:\\Users\\pamel\\Desktop\\Revature\\pamela-soulis-project0App\\pamelasoulisproject0Testing\\pamelasoulisproject0Testing.csproj",
   "expectedPackageFiles": [
@@ -142,7 +142,10 @@
     "C:\\Users\\pamel\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Users\\pamel\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
     "C:\\Users\\pamel\\.nuget\\packages\\xunit.abstractions\\2.0.3\\xunit.abstractions.2.0.3.nupkg.sha512",
-    "C:\\Users\\pamel\\.nuget\\packages\\xunit.extensibility.core\\2.4.1\\xunit.extensibility.core.2.4.1.nupkg.sha512"
+    "C:\\Users\\pamel\\.nuget\\packages\\xunit.core\\2.4.1\\xunit.core.2.4.1.nupkg.sha512",
+    "C:\\Users\\pamel\\.nuget\\packages\\xunit.extensibility.core\\2.4.1\\xunit.extensibility.core.2.4.1.nupkg.sha512",
+    "C:\\Users\\pamel\\.nuget\\packages\\xunit.extensibility.execution\\2.4.1\\xunit.extensibility.execution.2.4.1.nupkg.sha512",
+    "C:\\Users\\pamel\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.2\\xunit.runner.visualstudio.2.4.2.nupkg.sha512"
   ],
   "logs": []
 }

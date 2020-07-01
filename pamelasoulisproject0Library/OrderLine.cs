@@ -10,6 +10,7 @@ namespace pamelasoulisproject0Library
     /// </summary>
     public class OrderLine : BaseBusinessModel
     {
+
         public int OrderId { get; set; }
         public int ProductId { get; set; }
         public Product Product { get; set; }

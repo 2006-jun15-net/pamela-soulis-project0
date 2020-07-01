@@ -37,8 +37,7 @@ namespace pamela_soulis_project0App
             OrdersRepository ordrepo = new OrdersRepository(context);
             OrderLineRepository ordlirepo = new OrderLineRepository(context);
             GenericRepository<pamela_soulis_project0DataAccess.Model.Product, pamelasoulisproject0Library.Product> prepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.Product, pamelasoulisproject0Library.Product>(context);
-            //GenericRepository<pamela_soulis_project0DataAccess.Model.OrderLine, pamelasoulisproject0Library.OrderLine> olrepo = new GenericRepository<pamela_soulis_project0DataAccess.Model.OrderLine, pamelasoulisproject0Library.OrderLine>(context);
-            
+                        
                         
 
 
@@ -49,12 +48,9 @@ namespace pamela_soulis_project0App
                 Console.WriteLine("b:\tYou are a new customer.");
                 //for presentation, to show that the new customer was added successfully
                 Console.WriteLine("c:\tDisplay customers.");
-
                 Console.WriteLine("d:\tYou are a returning customer.");
                 Console.WriteLine("e:\tYou want to view your order history.");
-                Console.WriteLine("f:\tYou want to place an order.");
-                //Console.WriteLine("x:\tTo view your past order details.");
-                //Console.WriteLine("y:\tTo Display customer order history.");
+                Console.WriteLine("f:\tYou want to place an order.");               
                 Console.WriteLine("z:\tTo display location order history.");
 
 
@@ -62,7 +58,7 @@ namespace pamela_soulis_project0App
                 var input = Console.ReadLine();
 
 
-                //this works
+               
                 //display store locations to customers
                 if (input == "a")
                 {
@@ -76,8 +72,7 @@ namespace pamela_soulis_project0App
                 }
 
 
-
-                //this works
+                
                 //add a customer to the DB given user input
                 else if (input == "b")
                 {
@@ -106,7 +101,7 @@ namespace pamela_soulis_project0App
                 }
 
 
-                //this works
+                
                 //get a customer by id
                 else if (input == "d")
                 {
@@ -121,7 +116,7 @@ namespace pamela_soulis_project0App
 
 
 
-                //this works
+                
                 //display customer order history
                 else if (input == "e")
                 {
@@ -131,14 +126,14 @@ namespace pamela_soulis_project0App
                     var customerOrderHistory = crepo.GetWithNavigations(CustomerIdOrderHistory);
                     foreach (var order in customerOrderHistory.Orders)
                     {
-                        Console.WriteLine($"On {order.Date} at {order.Time} you ordered {string.Join(", ", order.OrderLine.Select(ol => ol.Product.Name))}");
+                        Console.WriteLine($"On {order.Date} at {order.Time} you ordered {string.Join(", ", order.OrderLine.Select(ol => ol.Product.Name))}.");
                     }
 
                 }
                 
 
 
-                //this works, but not the updated inventory + need to still do add to OrderLine method 
+                
                 //Display products, display inventory, add an order
                 else if (input == "f")
                 {
@@ -151,7 +146,7 @@ namespace pamela_soulis_project0App
                     foreach (var item in TheProductsAvailable)
                     {
 
-                        Console.WriteLine($"Product: {item.Name} with Id {item.ProductId}. We are selling this item for ${item.Price}");
+                        Console.WriteLine($"Product: {item.Name} with Id {item.ProductId}. We are selling this item for ${item.Price}.");
 
                     }
 
@@ -168,11 +163,11 @@ namespace pamela_soulis_project0App
                     {
                         if (productAmount.ProductId == product1)
                         {
-                            Console.WriteLine($" We have {productAmount.Quantity} left at this location");
+                            Console.WriteLine($" We have {productAmount.Quantity} left at this location.");
                         }
-                        
-                   
+                                       
                     }
+
                     //check if customer asks for too much product based on inventory available
                     Console.WriteLine("How many would you like?");
                     int amountOfProduct = int.Parse(Console.ReadLine());
@@ -180,9 +175,11 @@ namespace pamela_soulis_project0App
                     {
                         Console.WriteLine("Invalid input, please enter a valid product quantity.");
                     }
+
                     //get the max amount available to order for this product
                     var maxAmountForOrder = invrepo.GetProductQuantity(product1);
-                    //Console.WriteLine($"{maxAmountForOrder.Quantity}");
+
+                    
                     if(maxAmountForOrder.Quantity == 0)
                     {
                         Console.WriteLine($"We apologize, but this product is out of stock.");
@@ -206,7 +203,6 @@ namespace pamela_soulis_project0App
 
                         //decrease inventory
                         maxAmountForOrder.Quantity = maxAmountForOrder.Quantity - amountOfProduct;
-                        //Console.WriteLine(maxAmountForOrder.Quantity);
                         var newInventory = invrepo.UpdateTheQuantity(product1, location1, maxAmountForOrder.Quantity);
                         Console.WriteLine($"We now only have {newInventory.Quantity} of this product.");
                         invrepo.SaveToDB();
@@ -220,7 +216,7 @@ namespace pamela_soulis_project0App
 
                 }
 
-                //this works
+                
                 //display location order history
                 else if (input == "z")
                 {
@@ -237,13 +233,13 @@ namespace pamela_soulis_project0App
 
 
                 //display order details
-                else if (input == "x")
-                {
-                    Console.WriteLine("Enter your order ID number: ");
-                    int id = int.Parse(Console.ReadLine());
-                    var ReturningCustomerOrderHistory = ordrepo.GetById(id); //orderId
-                    Console.WriteLine($"You placed your last order at {ReturningCustomerOrderHistory.Date} {ReturningCustomerOrderHistory.Time}");
-                }
+                //else if (input == "x")
+                //{
+                //    Console.WriteLine("Enter your order ID number: ");
+                //    int id = int.Parse(Console.ReadLine());
+                //    var ReturningCustomerOrderHistory = ordrepo.GetById(id); //orderId
+                //    Console.WriteLine($"You placed your last order at {ReturningCustomerOrderHistory.Date} {ReturningCustomerOrderHistory.Time}");
+                //}
 
 
 

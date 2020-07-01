@@ -133,4 +133,8 @@ C:\Users\pamel\Desktop\Revature\pamela-soulis-project0App\pamelasoulisproject0Te
 C:\Users\pamel\Desktop\Revature\pamela-soulis-project0App\pamelasoulisproject0Testing\bin\Debug\netcoreapp3.1\pamela-soulis-project0DataAccess.pdb
 C:\Users\pamel\Desktop\Revature\pamela-soulis-project0App\pamelasoulisproject0Testing\bin\Debug\netcoreapp3.1\xunit.abstractions.dll
 C:\Users\pamel\Desktop\Revature\pamela-soulis-project0App\pamelasoulisproject0Testing\bin\Debug\netcoreapp3.1\xunit.core.dll
+C:\Users\pamel\Desktop\Revature\pamela-soulis-project0App\pamelasoulisproject0Testing\bin\Debug\netcoreapp3.1\xunit.execution.dotnet.dll
+C:\Users\pamel\Desktop\Revature\pamela-soulis-project0App\pamelasoulisproject0Testing\bin\Debug\netcoreapp3.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+C:\Users\pamel\Desktop\Revature\pamela-soulis-project0App\pamelasoulisproject0Testing\bin\Debug\netcoreapp3.1\xunit.runner.reporters.netcoreapp10.dll
+C:\Users\pamel\Desktop\Revature\pamela-soulis-project0App\pamelasoulisproject0Testing\bin\Debug\netcoreapp3.1\xunit.runner.utility.netcoreapp10.dll
 C:\Users\pamel\Desktop\Revature\pamela-soulis-project0App\pamelasoulisproject0Testing\obj\Debug\netcoreapp3.1\pamelasoulisproject0Testing.csproj.CoreCompileInputs.cache
