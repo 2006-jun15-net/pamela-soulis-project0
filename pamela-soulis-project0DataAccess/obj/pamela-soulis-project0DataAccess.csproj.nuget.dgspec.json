@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pamel\\Desktop\\Revature\\pamela-soulis-project0App\\pamela-soulis-project0DataAccess\\pamela-soulis-project0DataAccess.csproj": {}
+    "C:\\Users\\jackp\\pamela-soulis-project0\\pamela-soulis-project0DataAccess\\pamela-soulis-project0DataAccess.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pamel\\Desktop\\Revature\\pamela-soulis-project0App\\pamela-soulis-project0DataAccess\\pamela-soulis-project0DataAccess.csproj": {
+    "C:\\Users\\jackp\\pamela-soulis-project0\\pamela-soulis-project0DataAccess\\pamela-soulis-project0DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pamel\\Desktop\\Revature\\pamela-soulis-project0App\\pamela-soulis-project0DataAccess\\pamela-soulis-project0DataAccess.csproj",
+        "projectUniqueName": "C:\\Users\\jackp\\pamela-soulis-project0\\pamela-soulis-project0DataAccess\\pamela-soulis-project0DataAccess.csproj",
         "projectName": "pamela-soulis-project0DataAccess",
-        "projectPath": "C:\\Users\\pamel\\Desktop\\Revature\\pamela-soulis-project0App\\pamela-soulis-project0DataAccess\\pamela-soulis-project0DataAccess.csproj",
-        "packagesPath": "C:\\Users\\pamel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pamel\\Desktop\\Revature\\pamela-soulis-project0App\\pamela-soulis-project0DataAccess\\obj\\",
+        "projectPath": "C:\\Users\\jackp\\pamela-soulis-project0\\pamela-soulis-project0DataAccess\\pamela-soulis-project0DataAccess.csproj",
+        "packagesPath": "C:\\Users\\jackp\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jackp\\pamela-soulis-project0\\pamela-soulis-project0DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\pamel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jackp\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

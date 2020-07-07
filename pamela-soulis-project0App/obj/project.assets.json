@@ -5190,19 +5190,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pamel\\.nuget\\packages\\": {}
+    "C:\\Users\\jackp\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pamel\\Desktop\\Revature\\pamela-soulis-project0App\\pamela-soulis-project0App\\pamela-soulis-project0App.csproj",
+      "projectUniqueName": "C:\\Users\\jackp\\pamela-soulis-project0\\pamela-soulis-project0App\\pamela-soulis-project0App.csproj",
       "projectName": "pamela-soulis-project0App",
-      "projectPath": "C:\\Users\\pamel\\Desktop\\Revature\\pamela-soulis-project0App\\pamela-soulis-project0App\\pamela-soulis-project0App.csproj",
-      "packagesPath": "C:\\Users\\pamel\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pamel\\Desktop\\Revature\\pamela-soulis-project0App\\pamela-soulis-project0App\\obj\\",
+      "projectPath": "C:\\Users\\jackp\\pamela-soulis-project0\\pamela-soulis-project0App\\pamela-soulis-project0App.csproj",
+      "packagesPath": "C:\\Users\\jackp\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jackp\\pamela-soulis-project0\\pamela-soulis-project0App\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\pamel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jackp\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5215,8 +5215,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\pamel\\Desktop\\Revature\\pamela-soulis-project0App\\pamelasoulisproject0Library\\pamelasoulisproject0Library.csproj": {
-              "projectPath": "C:\\Users\\pamel\\Desktop\\Revature\\pamela-soulis-project0App\\pamelasoulisproject0Library\\pamelasoulisproject0Library.csproj"
+            "C:\\Users\\jackp\\pamela-soulis-project0\\pamelasoulisproject0Library\\pamelasoulisproject0Library.csproj": {
+              "projectPath": "C:\\Users\\jackp\\pamela-soulis-project0\\pamelasoulisproject0Library\\pamelasoulisproject0Library.csproj"
             }
           }
         }
