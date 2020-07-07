@@ -58,7 +58,7 @@ namespace pamela_soulis_project0App
                 var input = Console.ReadLine();
 
 
-               
+
                 //display store locations to customers
                 if (input == "a")
                 {
@@ -72,7 +72,7 @@ namespace pamela_soulis_project0App
                 }
 
 
-                
+
                 //add a customer to the DB given user input
                 else if (input == "b")
                 {
@@ -90,26 +90,39 @@ namespace pamela_soulis_project0App
                 //display all customers to check if last one was added successfully
                 else if (input == "c")
                 {
-                    
+
                     var AllTheCustomers = crepo.GetAll().ToList();
                     foreach (var person in AllTheCustomers)
                     {
                         Console.WriteLine($"Here are our returning customers: {person.FirstName} {person.LastName} with ID number {person.CustomerId}.");
 
                     }
-                                        
+
                 }
 
 
-                
+
                 //get a customer by id
                 else if (input == "d")
                 {
 
+
                     Console.WriteLine("Enter your ID number: ");
                     int id = int.Parse(Console.ReadLine());
-                    var ReturningCustomer = crepo.GetById(id);
-                    Console.WriteLine($"Hi {ReturningCustomer.FirstName} {ReturningCustomer.LastName}! Welcome back!");
+                    if (id == 5 || id == 6)
+                    {
+                        var ReturningCustomer = crepo.GetById(id);
+                        Console.WriteLine($"Hi {ReturningCustomer.FirstName} {ReturningCustomer.LastName}! Welcome back!");
+                    }
+
+                    else
+                    {
+                        throw new ArgumentOutOfRangeException();
+
+                    }
+
+
+
                 }
 
 
